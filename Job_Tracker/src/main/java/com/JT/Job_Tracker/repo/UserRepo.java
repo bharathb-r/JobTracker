@@ -1,5 +1,14 @@
 package com.JT.Job_Tracker.repo;
 
-public interface UserRepo {
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.JT.Job_Tracker.model.Job;
+import com.JT.Job_Tracker.model.User;
+
+public interface UserRepo extends JpaRepository<User, UUID> {
+	Optional<User> findByEmail(String email);
 
 }
