@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    email: "",
     password: "",
   });
   const { login } = useAuth();
@@ -18,22 +18,28 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.password) {
-      alert("Please fill in both fields");
+
+    if (!formData.email || !formData.password) {
+      setError("Please fill in both fields");
       return;
     }
-    try {
-      const response = await axios.post(
-        "http://your-backend-url/api/auth/login",
-        formData
-      );
-      const { user, token } = response.data;
-      console.log("Login successful, token:", token);
 
-      login(user, token);
-      navigate("/home");
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/users?email=${formData.email}`
+      );
+      const user = response.data[0];
+
+      if (user && user.password === formData.password) {
+        const fakeToken = "abc123xyz456";
+        localStorage.setItem("authToken", fakeToken);
+        login({ name: user.firstname }, fakeToken);
+        navigate("/home");
+      } else {
+        setError("Invalid credentials, please try again.");
+      }
     } catch (error) {
-      setError("Invalid credentials, please try again.");
+      setError("An error occurred while logging in. Please try again.");
     }
   };
 
@@ -43,16 +49,16 @@ const Login = () => {
       <h1 className="login-title">Welcome To Job Tracker</h1>
       <h3 className="login-subtitle">Login</h3>
       <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="name" className="login-label">
-          Name
+        <label htmlFor="email" className="login-label">
+          Email
         </label>
         <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Enter Your Name"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter Your Email"
           className="login-input"
-          value={formData.name}
+          value={formData.email}
           onChange={handleChange}
         />
         <label htmlFor="password" className="login-label">
@@ -73,7 +79,7 @@ const Login = () => {
       </form>
       <div className="create-account">
         <h5>
-          Create Account
+          Don’t have an account?{" "}
           <Link to="/signup" className="signup-link">
             Sign Up
           </Link>

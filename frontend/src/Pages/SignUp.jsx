@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -14,9 +15,31 @@ const SignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); // later you can connect this to your API
+    
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Sending the form data to json-server
+    try {
+      const response = await axios.post("http://localhost:3001/users", {
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        email: formData.email,
+        password: formData.password,
+      });
+      
+      console.log("User signed up successfully:", response.data);
+      alert("Signup Successful! Please login now.");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during signup:", error);
+    }
   };
 
   return (
@@ -34,7 +57,7 @@ const SignUp = () => {
           value={formData.firstname}
           onChange={handleChange}
         />
-
+        
         <label htmlFor="lastname" className="signup-label">Last Name</label>
         <input
           type="text"
@@ -84,9 +107,7 @@ const SignUp = () => {
 
       <div className="already-account">
         <h5>Already have an account?</h5>
-        <Link to="/login" className="login-link">
-          Login
-        </Link>
+        <Link to="/login" className="login-link">Login</Link>
       </div>
     </div>
   );
