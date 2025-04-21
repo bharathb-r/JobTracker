@@ -26,14 +26,14 @@ public class JobController {
     @Autowired 
     private JobService jobService;
 
-    @GetMapping
+    @GetMapping("/list/{userId}")
     public ResponseEntity<List<Job>> getJobs(@RequestParam UUID userId) {
         return ResponseEntity.ok(jobService.getJobs(userId));
     }
 
-    @PostMapping
-    public ResponseEntity<Job> create(@RequestBody Job job, @RequestParam UUID userId) {
-        return ResponseEntity.ok(jobService.createJob(job, userId));
+    @PostMapping("/add")
+    public ResponseEntity<Job> create(@RequestBody Job job) {
+        return ResponseEntity.ok(jobService.createJob(job));
     }
 
     @PutMapping("/{id}")

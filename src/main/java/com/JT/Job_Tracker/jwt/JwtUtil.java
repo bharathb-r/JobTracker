@@ -1,41 +1,46 @@
 package com.JT.Job_Tracker.jwt;
 
+import java.security.Key;
+import java.security.SecureRandom;
 import java.util.Date;
-
-import javax.crypto.SecretKey;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-	
-    private static final String SECRET_KEY_STRING = "secret"; 
-    private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(SECRET_KEY_STRING.getBytes());
+
+    private final Key key = generateSecureKey();
+
+    private Key generateSecureKey() {
+        byte[] randomBytes = new byte[64];
+        new SecureRandom().nextBytes(randomBytes);
+        return Keys.hmacShaKeyFor(randomBytes);
+    }
 
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
-                .signWith(SECRET_KEY,Jwts.SIG.HS256)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) 
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractUsername(String token) {
-    	 return Jwts.parserBuilder()
-    	            .setSigningKey(SECRET_KEY) 
-    	            .build()
-    	            .parseClaimsJws(token)
-    	            .getBody()
-    	            .getSubject();
+        return Jwts.parserBuilder() 
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
         return extractUsername(token).equals(userDetails.getUsername());
     }
-
 }
