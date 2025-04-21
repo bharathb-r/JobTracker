@@ -8,11 +8,49 @@
       "password": "111"
     },
     {
-      "id": "80be",
-      "firstname": "jion",
-      "lastname": "sumo",
-      "email": "jio@gmail.com",
-      "password": "jio123"
+      "id": "366f",
+      "firstname": "vigneshwara",
+      "email": "sathisha250@gmail.com",
+      "password": "222"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "1",
+      "company": "Google",
+      "role": "Frontend Developer",
+      "salary": "120000",
+      "postDate": "15/04/2025",
+      "description": "Build and maintain UI components.",
+      "status": "Applied"
+    },
+    {
+      "id": "2",
+      "company": "Amazon",
+      "role": "Backend Developer",
+      "salary": "130000",
+      "postDate": "16/04/2025",
+      "description": "Develop backend services.",
+      "status": "Pending"
+    },
+    {
+      "id": "3",
+      "company": "Amazon-2",
+      "role": "Backend Developer",
+      "salary": "140000",
+      "postDate": "14/04/2025",
+      "description": "Develop backend services.",
+      "status": "Pending"
+    }
+  ],
+  "applied-jobs": [
+    {
+      "id": "936f",
+      "jobId": "1",
+      "fullName": "Sathish A",
+      "email": "sathisha25082000@gmail.com",
+      "resume": "C:\\fakepath\\JavaScript Core Concepts.pdf",
+      "applicationDate": "2025-04-21T12:45:20.118Z"
     }
   ]
 }

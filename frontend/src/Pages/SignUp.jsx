@@ -5,10 +5,8 @@ import axios from "axios";
 const SignUp = () => {
   const [formData, setFormData] = useState({
     firstname: "",
-    lastname: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -16,24 +14,18 @@ const SignUp = () => {
   };
 
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
 
     // Sending the form data to json-server
     try {
       const response = await axios.post("http://localhost:3001/users", {
         firstname: formData.firstname,
-        lastname: formData.lastname,
         email: formData.email,
         password: formData.password,
       });
-      
+
       console.log("User signed up successfully:", response.data);
       alert("Signup Successful! Please login now.");
       navigate("/login");
@@ -57,17 +49,6 @@ const SignUp = () => {
           value={formData.firstname}
           onChange={handleChange}
         />
-        
-        <label htmlFor="lastname" className="signup-label">Last Name</label>
-        <input
-          type="text"
-          name="lastname"
-          id="lastname"
-          placeholder="Enter Your Last Name"
-          className="signup-input"
-          value={formData.lastname}
-          onChange={handleChange}
-        />
 
         <label htmlFor="email" className="signup-label">Email</label>
         <input
@@ -88,17 +69,6 @@ const SignUp = () => {
           placeholder="Enter Your Password"
           className="signup-input"
           value={formData.password}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="confirmPassword" className="signup-label">Confirm Password</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          id="confirmPassword"
-          placeholder="Confirm Your Password"
-          className="signup-input"
-          value={formData.confirmPassword}
           onChange={handleChange}
         />
 

@@ -33,7 +33,7 @@ const Login = () => {
       if (user && user.password === formData.password) {
         const fakeToken = "abc123xyz456";
         localStorage.setItem("authToken", fakeToken);
-        login({ name: user.firstname }, fakeToken);
+        login({ name: user.firstname , email:user.email}, fakeToken);
         navigate("/home");
       } else {
         setError("Invalid credentials, please try again.");
