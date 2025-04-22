@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
- 
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -11,19 +11,19 @@ const Login = () => {
   const { login } = useAuth();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
- 
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     if (!formData.email || !formData.password) {
       setError("Please fill in both fields");
       return;
     }
- 
+
     try {
       const response = await axios.post(
         "http://localhost:8080/auth/login",
@@ -32,9 +32,9 @@ const Login = () => {
           password: formData.password,
         }
       );
- 
+
       const { token, name, email } = response.data; // expecting token and user info
- 
+
       localStorage.setItem("authToken", token);
       login({ name, email }, token);
       navigate("/home");
@@ -46,7 +46,7 @@ const Login = () => {
       }
     }
   };
- 
+
   return (
     <div className="login-container">
       {error && <p className="error-message">{error}</p>}
@@ -63,7 +63,7 @@ const Login = () => {
           value={formData.email}
           onChange={handleChange}
         />
- 
+
         <label htmlFor="password" className="login-label">Password</label>
         <input
           type="password"
@@ -74,10 +74,10 @@ const Login = () => {
           value={formData.password}
           onChange={handleChange}
         />
- 
+
         <button type="submit" className="login-button">Login</button>
       </form>
- 
+
       <div className="create-account">
         <h5>
           Don’t have an account?{" "}
@@ -89,5 +89,5 @@ const Login = () => {
     </div>
   );
 };
- 
+
 export default Login;

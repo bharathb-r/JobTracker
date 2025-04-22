@@ -23,7 +23,7 @@ const SignUp = () => {
         name: formData.name,
         email: formData.email,
         password: formData.password,
-        role: "USER"
+        role: "USER",
       });
 
       alert("Signup Successful! Please login now.");
@@ -39,7 +39,9 @@ const SignUp = () => {
       <h3 className="signup-subtitle">Sign Up</h3>
       <form className="signup-form" onSubmit={handleSubmit}>
         {/* Name Field */}
-        <label htmlFor="name" className="signup-label">Name</label>
+        <label htmlFor="name" className="signup-label">
+          Name
+        </label>
         <input
           type="text"
           name="name"
@@ -51,7 +53,9 @@ const SignUp = () => {
         />
 
         {/* Email Field */}
-        <label htmlFor="email" className="signup-label">Email</label>
+        <label htmlFor="email" className="signup-label">
+          Email
+        </label>
         <input
           type="email"
           name="email"
@@ -63,7 +67,9 @@ const SignUp = () => {
         />
 
         {/* Password Field */}
-        <label htmlFor="password" className="signup-label">Password</label>
+        <label htmlFor="password" className="signup-label">
+          Password
+        </label>
         <input
           type="password"
           name="password"
@@ -75,12 +81,16 @@ const SignUp = () => {
         />
 
         {/* Submit Button */}
-        <button type="submit" className="signup-button">Sign Up</button>
+        <button type="submit" className="signup-button">
+          Sign Up
+        </button>
       </form>
 
       <div className="already-account">
         <h5>Already have an account?</h5>
-        <Link to="/login" className="login-link">Login</Link>
+        <Link to="/login" className="login-link">
+          Login
+        </Link>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const response = await axios.get("http://localhost:3001/jobs");
+      const response = await axios.get("http://localhost:8080/jobs/list/all");
       setJobs(response.data);
     };
 
@@ -21,7 +21,7 @@ const Home = () => {
       
       <Navbar />
       {/* Dashboard Section */}
-      <Dashboard />
+       {/*<Dashboard /> */}
       <h1>Job Listings</h1>
       <div className="job-list">
         {jobs.map((job) => (

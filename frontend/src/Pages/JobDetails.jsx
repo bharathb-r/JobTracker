@@ -9,7 +9,7 @@ const JobDetails = () => {
     // Fetch job details based on id
     const fetchJobDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/jobs/${id}`);
+        const response = await fetch(`http://localhost:8080/api/jobs/${id}`);
         const data = await response.json();
         setJob(data);
       } catch (error) {
@@ -24,7 +24,9 @@ const JobDetails = () => {
     <div>
       {job && (
         <div>
-          <h1>{job.company} - {job.role}</h1>
+          <h1>
+            {job.company} - {job.role}
+          </h1>
           <p>{job.description}</p>
           <p>Salary: {job.salary}</p>
 

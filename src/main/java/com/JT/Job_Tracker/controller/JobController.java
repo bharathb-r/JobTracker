@@ -20,8 +20,8 @@ import com.JT.Job_Tracker.Service.JobService;
 import com.JT.Job_Tracker.model.Job;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/jobs")
+@CrossOrigin(origins = "http://localhost:5173")
 public class JobController {
 	
 

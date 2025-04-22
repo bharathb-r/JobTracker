@@ -14,7 +14,7 @@ const JobApplicationForm = () => {
     // Fetch job details based on the id from URL
     const fetchJobDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/jobs/${id}`);
+        const response = await fetch(`http://localhost:8080/api/jobs/${id}`);
         const data = await response.json();
         setJobDetails(data);
       } catch (error) {
