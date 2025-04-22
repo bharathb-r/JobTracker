@@ -4,7 +4,7 @@ import axios from "axios";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    firstname: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -20,8 +20,8 @@ const SignUp = () => {
 
     // Sending the form data to json-server
     try {
-      const response = await axios.post("http://localhost:3001/users", {
-        firstname: formData.firstname,
+      const response = await axios.post("http://localhost:8080/auth/register", {
+        name: formData.name,
         email: formData.email,
         password: formData.password,
       });
