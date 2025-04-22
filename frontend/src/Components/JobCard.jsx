@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom"; // Link for navigation
 
 const JobCard = ({ job }) => {
+  // Add a check for job data to avoid rendering errors if properties are missing
+  if (!job || !job.company || !job.role || !job.salary || !job.postDate) {
+    return <div>Invalid job data</div>; // Handle missing or invalid data
+  }
+
   return (
     <div className="job-card" style={{ border: "1px solid #ddd", padding: "20px", marginBottom: "20px" }}>
       <h3>{job.company} - {job.role}</h3>
