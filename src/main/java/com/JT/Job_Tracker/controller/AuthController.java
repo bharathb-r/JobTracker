@@ -1,12 +1,12 @@
 package com.JT.Job_Tracker.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,8 @@ import com.JT.Job_Tracker.model.User;
 import com.JT.Job_Tracker.repo.UserRepo;
 
 @RestController
-@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/auth")
 public class AuthController {
 	
 
@@ -43,20 +44,22 @@ public class AuthController {
         userRepo.save(user);
         return ResponseEntity.ok("Registered successfully");
     }
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+
         authManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.email, request.password)
         );
-        String token = jwtUtil.generateToken(
-            new org.springframework.security.core.userdetails.User(
-                request.email, request.password,
-                List.of()
-            )
-        );
+
+        User user = userRepo.findByEmail(request.email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+
+        String token = jwtUtil.generateToken(user);
+
         return ResponseEntity.ok(new LoginResponse(token));
     }
+
 	
 	
 

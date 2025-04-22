@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +20,21 @@ import com.JT.Job_Tracker.Service.JobService;
 import com.JT.Job_Tracker.model.Job;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/jobs")
 public class JobController {
 	
 
     @Autowired 
     private JobService jobService;
+    
+    @GetMapping("/list/all")
+    public ResponseEntity<List<Job>> getAllJobs(){
+    	return ResponseEntity.ok(jobService.getAllJobs());
+    }
 
-    @GetMapping("/list/{userId}")
-    public ResponseEntity<List<Job>> getJobs(@RequestParam UUID userId) {
+    @GetMapping("/list")
+    public ResponseEntity<Job> getJobs(@RequestParam UUID userId) {
         return ResponseEntity.ok(jobService.getJobs(userId));
     }
 
