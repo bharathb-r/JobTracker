@@ -19,7 +19,7 @@ import com.JT.Job_Tracker.Service.JobService;
 import com.JT.Job_Tracker.model.Job;
 
 @RestController
-@RequestMapping("/api/jobs")
+@RequestMapping("/jobs")
 public class JobController {
 	
 

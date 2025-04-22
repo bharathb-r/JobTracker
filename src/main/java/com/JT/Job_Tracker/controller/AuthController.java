@@ -20,7 +20,7 @@ import com.JT.Job_Tracker.model.User;
 import com.JT.Job_Tracker.repo.UserRepo;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 	
 

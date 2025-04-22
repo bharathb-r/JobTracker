@@ -9,24 +9,23 @@ const SignUp = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Sending the form data to json-server
     try {
-      const response = await axios.post("http://localhost:8080/auth/register", {
+      await axios.post("http://localhost:8080/auth/register", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
+        role: "USER",
       });
 
-      console.log("User signed up successfully:", response.data);
       alert("Signup Successful! Please login now.");
       navigate("/login");
     } catch (error) {
@@ -39,18 +38,24 @@ const SignUp = () => {
       <h1 className="signup-title">Welcome To Job Tracker</h1>
       <h3 className="signup-subtitle">Sign Up</h3>
       <form className="signup-form" onSubmit={handleSubmit}>
-        <label htmlFor="firstname" className="signup-label">First Name</label>
+        {/* Name Field */}
+        <label htmlFor="name" className="signup-label">
+          Name
+        </label>
         <input
           type="text"
-          name="firstname"
-          id="firstname"
-          placeholder="Enter Your First Name"
+          name="name"
+          id="name"
+          placeholder="Enter Your Name"
           className="signup-input"
-          value={formData.firstname}
+          value={formData.name}
           onChange={handleChange}
         />
 
-        <label htmlFor="email" className="signup-label">Email</label>
+        {/* Email Field */}
+        <label htmlFor="email" className="signup-label">
+          Email
+        </label>
         <input
           type="email"
           name="email"
@@ -61,7 +66,10 @@ const SignUp = () => {
           onChange={handleChange}
         />
 
-        <label htmlFor="password" className="signup-label">Password</label>
+        {/* Password Field */}
+        <label htmlFor="password" className="signup-label">
+          Password
+        </label>
         <input
           type="password"
           name="password"
@@ -72,12 +80,17 @@ const SignUp = () => {
           onChange={handleChange}
         />
 
-        <button type="submit" className="signup-button">Sign Up</button>
+        {/* Submit Button */}
+        <button type="submit" className="signup-button">
+          Sign Up
+        </button>
       </form>
 
       <div className="already-account">
         <h5>Already have an account?</h5>
-        <Link to="/login" className="login-link">Login</Link>
+        <Link to="/login" className="login-link">
+          Login
+        </Link>
       </div>
     </div>
   );
