@@ -2,34 +2,53 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import JobCard from "../Components/JobCard";
 import Navbar from "../Components/Navbar";
+import { useHistory } from "react-router-dom";  // To handle redirects
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);  // State to handle errors
+  const history = useHistory();  // Hook to manage redirection
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
+        const token = localStorage.getItem("token");
+        
+        if (!token) {
+          setError("No token found. Please log in.");
+          return;
+        }
+
         const response = await axios.get("http://localhost:8080/jobs/list/all", {
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
         });
+
         setJobs(response.data);
       } catch (err) {
         console.error("Error fetching jobs:", err);
         setError(`Error: ${err.message}`);
+
         // If there's a response from the server, we can capture that too:
         if (err.response) {
           console.error("Response data:", err.response.data);
           console.error("Response status:", err.response.status);
           console.error("Response headers:", err.response.headers);
+
+          // If the token is invalid or expired, we can redirect the user to login
+          if (err.response.status === 401) {
+            setError("Session expired. Please log in again.");
+            localStorage.removeItem("token");  // Remove the expired token
+            history.push("/login");  // Redirect to login page
+          }
         }
       }
     };
 
     fetchJobs();
-  }, []);
+  }, [history]);
 
   return (
     <div>
