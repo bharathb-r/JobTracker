@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(customizer->customizer.disable())
             .authorizeHttpRequests(request->request
-            .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers("/auth/**").permitAll()
             .anyRequest().authenticated())
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

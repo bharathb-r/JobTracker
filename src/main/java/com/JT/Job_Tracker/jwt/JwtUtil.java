@@ -7,6 +7,8 @@ import java.util.Date;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.JT.Job_Tracker.model.User;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -21,15 +23,16 @@ public class JwtUtil {
         new SecureRandom().nextBytes(randomBytes);
         return Keys.hmacShaKeyFor(randomBytes);
     }
-
-    public String generateToken(UserDetails userDetails) {
+    
+    public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(user.getEmail()) // or user.getId().toString()
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) 
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     public String extractUsername(String token) {
         return Jwts.parserBuilder() 

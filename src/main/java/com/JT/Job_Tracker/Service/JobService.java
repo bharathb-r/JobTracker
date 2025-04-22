@@ -31,9 +31,8 @@ public class JobService {
         job.setUser(user);
         return jobRepo.save(job);
     }
-
-    // Method to get jobs by user ID
-    public List<Job> getJobs(UUID userId) {
+    
+    public Job getJobs(UUID userId) {
         return jobRepo.findByUserId(userId);
     }
 
@@ -54,4 +53,8 @@ public class JobService {
     public void deleteJob(UUID id) {
         jobRepo.deleteById(id);
     }
+
+	public List<Job> getAllJobs() {
+		return jobRepo.findAll();
+	}
 }

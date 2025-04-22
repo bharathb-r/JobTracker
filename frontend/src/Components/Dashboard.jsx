@@ -13,8 +13,8 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         // Fetch both jobs and applied-jobs data
-        const responseJobs = await axios.get("http://localhost:3001/jobs");
-        const responseAppliedJobs = await axios.get("http://localhost:3001/applied-jobs");
+        const responseJobs = await axios.get("http://localhost:8080/jobs");
+        const responseAppliedJobs = await axios.get("http://localhost:8080/applied-jobs");
         const jobsData = responseJobs.data;
         const appliedJobsData = responseAppliedJobs.data;
 

@@ -9,6 +9,7 @@ import Profile from "./Pages/Profile";
 import JobDetails from "./Pages/JobDetails";
 import MyApplications from "./Pages/MyApplications";
 import JobApplicationForm from "./Components/JobApplicationForm"; // Import the JobApplicationForm component
+import JobList from "./Pages/JobList";
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
           }
         />
         <Route path="/job-details/:id" element={<JobDetails />} />
-        
+        <Route path="/jobs" element={<JobList />} />
+
         {/* Job Application Form Route */}
         <Route
           path="/apply/:id"
@@ -35,7 +37,7 @@ function App() {
             </PrivateRoute>
           }
         />
-        
+
         <Route
           path={"/profile"}
           element={
