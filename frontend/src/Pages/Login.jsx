@@ -7,6 +7,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    name: "",
   });
   const { login } = useAuth();
   const [error, setError] = useState(null);
@@ -25,13 +26,10 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/login",
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
+      const response = await axios.post("http://localhost:8080/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
 
       const { token, name, email } = response.data; // expecting token and user info
 
@@ -53,7 +51,9 @@ const Login = () => {
       <h1 className="login-title">Welcome To Job Tracker</h1>
       <h3 className="login-subtitle">Login</h3>
       <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="email" className="login-label">Email</label>
+        <label htmlFor="email" className="login-label">
+          Email
+        </label>
         <input
           type="email"
           name="email"
@@ -64,7 +64,9 @@ const Login = () => {
           onChange={handleChange}
         />
 
-        <label htmlFor="password" className="login-label">Password</label>
+        <label htmlFor="password" className="login-label">
+          Password
+        </label>
         <input
           type="password"
           name="password"
@@ -75,7 +77,9 @@ const Login = () => {
           onChange={handleChange}
         />
 
-        <button type="submit" className="login-button">Login</button>
+        <button type="submit" className="login-button">
+          Login
+        </button>
       </form>
 
       <div className="create-account">
