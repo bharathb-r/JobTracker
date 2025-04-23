@@ -2,29 +2,32 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import JobCard from "../Components/JobCard";
 import Navbar from "../Components/Navbar";
-import { useHistory } from "react-router-dom";  // To handle redirects
+import { useHistory } from "react-router-dom"; // To handle redirects
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
-  const [error, setError] = useState(null);  // State to handle errors
-  const history = useHistory();  // Hook to manage redirection
+  const [error, setError] = useState(null); // State to handle errors
+  const history = useHistory(); // Hook to manage redirection
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem("token");
-        
+
         if (!token) {
           setError("No token found. Please log in.");
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/jobs/list/all", {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:8080/jobs/list/all",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setJobs(response.data);
       } catch (err) {
@@ -40,8 +43,8 @@ const Home = () => {
           // If the token is invalid or expired, we can redirect the user to login
           if (err.response.status === 401) {
             setError("Session expired. Please log in again.");
-            localStorage.removeItem("token");  // Remove the expired token
-            history.push("/login");  // Redirect to login page
+            localStorage.removeItem("token"); // Remove the expired token
+            history.push("/login"); // Redirect to login page
           }
         }
       }
@@ -49,6 +52,8 @@ const Home = () => {
 
     fetchJobs();
   }, [history]);
+
+  const add = [1, 2];
 
   return (
     <div>
