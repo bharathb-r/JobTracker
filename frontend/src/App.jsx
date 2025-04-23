@@ -10,8 +10,7 @@ import JobDetails from "./Pages/JobDetails";
 import MyApplications from "./Pages/MyApplications";
 import JobApplicationForm from "./Components/JobApplicationForm"; // Import the JobApplicationForm component
 import JobList from "./Pages/JobList";
-import AdminRoute from "./Components/AdminRoute";
-import AdminDashboard from "./Pages/admin/AdminDashboard";
+
 
 function App() {
   return (
@@ -19,14 +18,7 @@ function App() {
       <Routes>
         <Route path={"/login"} element={<Login />} />
         <Route path={"/signup"} element={<SignUp />} />
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
-        />
+        
         <Route
           path={"/home"}
           element={
